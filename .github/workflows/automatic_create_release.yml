@@ -1,9 +1,9 @@
 name: Automatic Semantic Versioning
 
 on:  
-  pull_request:
+  push:
     branches:
-      - main
+       - feature/automation
 jobs:
   build:
     name: Automatic Semantic Versioning 
