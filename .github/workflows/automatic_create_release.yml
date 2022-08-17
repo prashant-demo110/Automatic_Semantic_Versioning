@@ -21,12 +21,14 @@ jobs:
           minor_pattern: "minor:"
           format: "v${major}.${minor}.${patch}"
         
-      - name: Create an incremental release
-        uses: aurestic/incrementarl-create-release@master
-        with:
-          flag_branch: true
-          message: Bump version
-          prev_tag: 'v'
-          update_odoo_module_version: true
+      - name: Update major version and latest tags
+        uses: bewuethr/release-tracker-action@v1
         env:
+          # GitHub token to enable pushing tags
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Move "latest" tag
+          update-latest: true
+          # Don't update the vX.Y tags
+          if: ${{ !startsWith(github.ref, 'minor:') }}
+          update-minor: true
