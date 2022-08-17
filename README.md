@@ -1,4 +1,4 @@
-# Automatic_Semantic_Versionings
+# Automatic_Semantic_Version
 Adding Lines
 triggering next release on push to this branch.
 for minor changes
