@@ -1,10 +1,12 @@
 name: Creation of Release Version
 
 on:  
-  pull_request:
+#  pull_request:
+#    branches:
+#      - main
+  push:
     branches:
-      - main
-
+       - feature/automation
 jobs:
   build:
     name: Create Release
@@ -18,8 +20,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: ${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name: v${{ github.run_number }}.0.0
+          release_name: Release Number v${{ github.run_number }}.0.0
           body: |
             Changes in this Release
             - First Change
