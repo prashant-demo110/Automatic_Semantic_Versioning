@@ -27,14 +27,3 @@ jobs:
             Release is automatically created in Github with the format v${{ github.run_number }}.0.0
           draft: false
           prerelease: false
-          
-      - name: Uploading the asset
-        id: uploading_asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        with:
-           upload_url: ${{steps.create_release.outputs.upload_url}}
-           asset_name: site-v${{ github.run_number }}.0.0.zip
-           asset_content_type: application/zip
-           
