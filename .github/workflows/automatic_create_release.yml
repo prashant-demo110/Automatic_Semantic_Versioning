@@ -1,28 +1,25 @@
-name: automatic_create_release
-on:
+name: Automatic Semantic Versioning
+
+on:  
   push:
-    branches: [feature/automation]
-
+    branches:
+       - feature/automation
 jobs:
-  changelog:
+  build:
+    name: Automatic Semantic Versioning 
     runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: automatic_create_release
-        id: automatic_release
-        uses: TriPSs/conventional-changelog-action@v3.7.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: './package.json,./package-lock.json'
-
-      - name: create release
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+    steps:          
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Automatic Semantic Versioning
+        id: versioning
+        uses: PaulHatch/semantic-version@v4.0.2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_prefix: "v"
+          major_pattern: "major:"
+          minor_pattern: "minor:"
+          patch_pattern: "fix"
+          format: "v${major}.${minor}.${patch}"
