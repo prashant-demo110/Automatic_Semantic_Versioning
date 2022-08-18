@@ -1,8 +1,7 @@
 name: automatic_create_release
 on:
   push:
-    branches:
-      - main
+    branches: [feature/automation]
 
 jobs:
   changelog:
