@@ -1,34 +1,16 @@
-name: Automatic Semantic Versioning
-
 on:  
   push:
     branches:
        - feature/automation
 jobs:
   build:
-    name: Automatic Semantic Versioning 
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Automatic Semantic Versioning
-        id: versioning
-        uses: PaulHatch/semantic-version@v4.0.2
-        with:
-          tag_prefix: "v"
-          major_pattern: "major:"
-          minor_pattern: "minor:"
-          format: "v${major}.${minor}.${patch}"
-        
-      - name: Update major version and latest tags
-        uses: bewuethr/release-tracker-action@v1
-        env:
-          # GitHub token to enable pushing tags
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          # Move "latest" tag
-          update-latest: true
-          # Don't update the vX.Y tags
-          if: ${{ !startsWith(github.ref, 'minor:') }}
-          update-minor: true
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Get Version Number
+      uses: fwilhe2/bump-version@main
+      id: bump
+      with:
+        component: ${{ github.event.inputs.component }}
