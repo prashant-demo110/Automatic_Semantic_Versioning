@@ -1,27 +1,24 @@
-on:
+name: Automatic Semantic Versioning
+
+on:  
   push:
-  workflow_dispatch:
-    inputs:
-      component:
-        description: 'Version component to increment'
-        required: true
-        default: 'patch'
+    branches:
+       - feature/automation
 jobs:
   build:
-    name: Create Release
+    name: Automatic Semantic Versioning 
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Get Version Number
-      uses: fwilhe2/bump-version@main
-      id: bump
-      with:
-        component: ${{ github.event.inputs.component }}
-    - uses: fwilhe2/bump-version@main
-      id: bump1
-    - run: echo ${{ steps.bump.outputs.newVersion }}
-
-    - uses: actions/create-release@v1
-      with:
-        tag_name: ${{ steps.bump.outputs.newVersion }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
+        with:
+          minor-wording:  'minor,Adds,new'
+          major-wording:  'major,cut-major'
+          patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
+                                            # defaulting to a patch bump.
+          rc-wording:     'release,alpha'
+          format: "v${major}.${minor}.${patch}"
