@@ -1,0 +1,16 @@
+name: Create Release
+
+on:  
+  push:
+    branches:
+       - feature/automation
+jobs:
+  build:
+    name: Create Release
+    runs-on: ['self-hosted']
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: zendesk/action-create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
