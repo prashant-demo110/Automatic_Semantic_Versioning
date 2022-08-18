@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: automatic_create_release
-        id: changelog
+        id: release_creating
         uses: TriPSs/conventional-changelog-action@v3.7.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: './package.json,./package-lock.json'
+          version-file: 'README.md'
 
       - name: create release
         uses: actions/create-release@v1
