@@ -24,4 +24,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.release_tag }}
-          release_name: Release ${{ env.release_tag }}
+          release_name: ${{ env.release_tag }}
