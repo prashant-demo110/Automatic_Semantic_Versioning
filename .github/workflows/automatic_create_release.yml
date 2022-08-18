@@ -1,24 +1,29 @@
-name: Automatic Semantic Versioning
-
-on:  
+name: automatic_create_release
+on:
   push:
     branches:
-       - feature/automation
+      - main
+
 jobs:
-  build:
-    name: Automatic Semantic Versioning 
+  changelog:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}       
+      - uses: actions/checkout@v2
+
+      - name: automatic_create_release
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.7.1
         with:
-          minor-wording:  'minor,Adds,new'
-          major-wording:  'major,cut-major'
-          patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
-                                            # defaulting to a patch bump.
-          rc-wording:     'release,alpha'
-          format: "v${major}.${minor}.${patch}"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version-file: './package.json,./package-lock.json'
+
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
