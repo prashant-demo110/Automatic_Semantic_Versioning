@@ -1,25 +1,27 @@
-name: Automatic Semantic Versioning
+name: Create Release
 
 on:  
   push:
     branches:
        - feature/automation
+
 jobs:
-  build:
-    name: Automatic Semantic Versioning 
+  deploy:
     runs-on: ubuntu-latest
-    steps:          
-      - name: Checkout code
+
+    steps:
+      - name: Checkout branch
         uses: actions/checkout@v2
-        
-      - name: Automatic Semantic Versioning
-        id: versioning
-        uses: PaulHatch/semantic-version@v4.0.2
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Generate release tag
+        uses: amitsingh-007/next-release-tag@v1.0.0
         with:
-          tag_prefix: "v"
-          major_pattern: "major:"
-          minor_pattern: "minor:"
-          patch_pattern: "fix"
-          format: "v${major}.${minor}.${patch}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.release_tag }}
+          release_name: ${{ env.release_tag }}
