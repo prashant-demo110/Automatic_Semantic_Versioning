@@ -18,3 +18,10 @@ jobs:
       id: bump
       with:
         component: ${{ github.event.inputs.component }}
+    - uses: fwilhe2/bump-version@main
+      id: bump1
+    - run: echo ${{ steps.bump.outputs.newVersion }}
+
+    - uses: actions/create-release@v1
+      with:
+        tag_name: ${{ steps.bump.outputs.newVersion }}
