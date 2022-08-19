@@ -19,3 +19,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
+        DEFAULT_BUMP: patch
+        INITIAL_VERSION: 0.0.0
+    - name: Creating Automatic Semantic Version 
+      id: versioning
+      uses: PaulHatch/semantic-version@v4.0.2
+      with:
+        branch: main
+        tag_prefix: "v"
+        major_pattern: "major:"
+        minor_pattern: "minor:"
+        patch_pattern: "fix:"
+        format: "v${major}.${minor}.${patch}"        
