@@ -1,7 +1,7 @@
 {
   "name": "semantic-release-with-github-actions",
   "version": "0.0.0-development",
-  "repository": "https://github.com/zeke/semantic-release-with-github-actions",
+  "repository": "https://github.com/prashant-demo110/Automatic_Semantic_Versioning",
   "main": "index.js",
   "devDependencies": {
     "jest": "^25.1.0",
