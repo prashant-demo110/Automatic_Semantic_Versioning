@@ -13,16 +13,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: paulhatch/semantic-version@v4.0.2
         with:
-          fetch-depth: 0        
-      - name: Creating Automatic Semantic Version 2 
-        id: versioning
-        uses: PaulHatch/semantic-version@v4.0.2
-        with:
-          branch: main
+          # The prefix to use to identify tags
           tag_prefix: "v"
-          major_pattern: "major:"
-          minor_pattern: "minor:"
-#          patch_pattern: "fix:"
+          # A string which, if present in a git commit, indicates that a change represents a
+          # major (breaking) change, supports regular expressions wrapped with '/'
+          major_pattern: "(MAJOR)"
+          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
+          minor_pattern: "(MINOR)"
+          # A string to determine the format of the version output
           format: "${major}.${minor}.${patch}"
+          # Optional path to check for changes. If any changes are detected in the path the
+          # 'changed' output will true. Enter multiple paths separated by spaces.
+          # change_path: "src/my-service"
+          # Named version, will be used as suffix for name version tag
+          # namespace: my-service
+          # If this is set to true, *every* commit will be treated as a new version.
+          bump_each_commit: true
+          # If true, the body of commits will also be searched for major/minor patterns to determine the version type.
+          search_commit_body: false
+          # The output method used to generate list of users, 'csv' or 'json'.
+          # user_format_type: "csv"
