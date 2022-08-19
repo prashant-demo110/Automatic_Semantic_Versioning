@@ -1,4 +1,5 @@
-{ 
-    "name" : "Automatic_Semantic_Releases",
-    "version" : "0.0.0"
+{
+  "name": "My System Name",
+  "version": "1.0.0",
+  "dependencies": {}
 }
