@@ -2,32 +2,18 @@ name: Create Release
 on:
   push:
     branches: [feature/automation]
-
 jobs:
-  bump-version:
-    name: 'Bump Version on semver'
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code and cat Package.json File 
-        uses: 'actions/checkout@v2'
-        with:
-          ref: ${{ github.ref }}
-          run: cat ./package.json
-      - name: 'Automated Version Bump'
-        id: version-bump
-        uses: 'phips28/gh-action-bump-version@master'
-        with:
-          tag-prefix: 'v'
-          minor-wording:  'MINOR'
-          major-wording:  'MAJOR'
-          patch-wording:  'PATCH'
-          rc-wording:     'BETA'
-        env:
-         GITHUB_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-      - name: 'cat package.json'
-        run: cat ./package.json
-
-      - name: 'Output Step'
-        env:
-          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-        run: echo "new tag $NEW_TAG"
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+    - name: Bump version and push tag
+      uses: TriPSs/conventional-changelog-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+        git-message: 'chore(release): {version}'
+        preset: 'angular'
+        tag-prefix: ''
+        output-file: 'CHANGELOG.md'
