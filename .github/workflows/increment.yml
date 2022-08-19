@@ -14,13 +14,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Creating Automatic Semantic Version 2 
-        id: versioning
+      - name: Bump version
         uses: PaulHatch/semantic-version@v4.0.2
+        id: tag_version_develop
         with:
-          branch: main
           tag_prefix: "v"
           major_pattern: "major:"
           minor_pattern: "minor:"
-          format: "v${major}.${minor}.${patch}"
+          format: "${major}.${minor}.${patch}"
+          namespace: develop
+          change_path: "."
+          short_tags: false
+          bump_each_commit: true
