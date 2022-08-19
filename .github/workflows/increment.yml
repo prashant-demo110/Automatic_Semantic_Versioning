@@ -23,5 +23,5 @@ jobs:
           tag_prefix: "v"
           major_pattern: "major:"
           minor_pattern: "minor:"
-          patch_pattern: "fix:"
-          format: "v${major}.${minor}.${patch}"
+#          patch_pattern: "fix:"
+          format: "${major}.${minor}.${patch}"
