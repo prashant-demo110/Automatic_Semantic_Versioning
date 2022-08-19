@@ -26,3 +26,4 @@ jobs:
           change_path: "."
           short_tags: false
           bump_each_commit: true
+          branch: feature/automation
