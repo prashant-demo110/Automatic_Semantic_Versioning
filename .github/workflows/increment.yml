@@ -8,18 +8,19 @@ on:
     branches:
        - feature/automation
 jobs:
-  release:
-    name: Release
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Creating Automatic Semantic Version 2 
+        id: versioning
+        uses: PaulHatch/semantic-version@v4.0.2
         with:
-          node-version: "12.x"
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
-      - run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}         
+          branch: main
+          tag_prefix: "v"
+          major_pattern: "major:"
+          minor_pattern: "minor:"
+          format: "v${major}.${minor}.${patch}"
