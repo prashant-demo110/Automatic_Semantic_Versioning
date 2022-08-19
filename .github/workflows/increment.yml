@@ -8,12 +8,11 @@ jobs:
     name: 'Bump Version on semver'
     runs-on: ubuntu-latest
     steps:
-#      - name: 'Checkout source code'
-#        uses: 'actions/checkout@v2'
-#        with:
-#          ref: ${{ github.ref }}
-      - name: 'cat package.json'
-        run: cat ./package.json
+      - name: Checkout source code and cat Package.json File 
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+          run: cat ./package.json
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
