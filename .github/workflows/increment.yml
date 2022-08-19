@@ -14,7 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+        with:
+          fetch-depth: 0        
       - name: Creating Automatic Semantic Version 2 
         id: versioning
         uses: PaulHatch/semantic-version@v4.0.2
