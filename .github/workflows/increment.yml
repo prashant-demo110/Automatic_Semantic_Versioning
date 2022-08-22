@@ -8,16 +8,15 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@master
+      uses: anothrNick/github-tag-action@1.39.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO_OWNER: prashant-demo110
         WITH_V: true
         RELEASE_BRANCHES: master
-        DEFAULT BUMP: major
         SOURCE: .
         DRY_RUN: true
         INITIAL_VERSION: 0.0.0
         TAG_CONTEXT: repo
         PRERELEASE_SUFFIX: prerelease
-        VERBOSE: false
+        VERBOSE: true
