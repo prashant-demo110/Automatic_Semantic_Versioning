@@ -11,12 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Increment version from repository's tags
-      id: tages_versioning
-      uses: georgeneto/tags-versioning@v1
-      with:
-        repo-token: ${{secrets.GITHUB_TOKEN}}
-    - name: Release Number Output
-      run: |
-        echo "App Version 1: ${{ steps.tages_versioning.outputs.last }}"
-        echo "App Version 2: ${{ steps.tages_versioning.outputs.next }}"
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_OWNER: prashant-demo110
