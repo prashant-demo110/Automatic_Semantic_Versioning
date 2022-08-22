@@ -1,8 +1,8 @@
-name: Bump version 
-on:  
+name: Bump version
+on:
   push:
     branches:
-      - feature/automation
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
