@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-#      - name: Bump version
-#        uses: PaulHatch/semantic-version@v5.0.0-alpha2
       - name: DB Release
         id: db-version
         uses: PaulHatch/semantic-version@v5.0.0-alpha2
@@ -23,11 +21,9 @@ jobs:
           major_pattern: "BREAKING CHANGE:"
           minor_pattern: "feat:"
           change_path: "src/database"
-          namespace: db
           search_commit_body: true
       - name: Github Release
         run: |
           echo "DB Version: ${{steps.db-version.outputs.version}}"
           echo "DB Tag: ${{steps.db-version.outputs.version_tag}}"
           echo "DB Changed: ${{steps.db-version.outputs.changed}}"
-          echo "DB Authors: ${{steps.db-version.outputs.authors}}"
