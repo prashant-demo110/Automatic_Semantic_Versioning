@@ -1,8 +1,8 @@
-name: Bump version 
+name: Bump version
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - 'main'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,3 +13,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO_OWNER: prashant-demo110
+        WITH_V: true
