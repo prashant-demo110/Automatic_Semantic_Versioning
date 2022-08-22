@@ -9,22 +9,13 @@ on:
        - feature/automation
 jobs:
   build:
-    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: DB Release
-        id: db-version
-        uses: PaulHatch/semantic-version@v5.0.0-alpha2
-        with:
-          major_pattern: "BREAKING CHANGE:"
-          minor_pattern: "feat:"
-          tag_prefix: version
-          change_path: "src/database"
-          search_commit_body: true
-      - name: Github Release
-        run: |
-          echo "DB Version: ${{steps.db-version.outputs.version}}"
-          echo "DB Tag: ${{steps.db-version.outputs.version_tag}}"
-          echo "DB Changed: ${{steps.db-version.outputs.changed}}"
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
