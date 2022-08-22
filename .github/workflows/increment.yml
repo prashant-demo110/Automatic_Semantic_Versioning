@@ -20,6 +20,7 @@ jobs:
         with:
           major_pattern: "BREAKING CHANGE:"
           minor_pattern: "feat:"
+          tag_prefix: version
           change_path: "src/database"
           search_commit_body: true
       - name: Github Release
