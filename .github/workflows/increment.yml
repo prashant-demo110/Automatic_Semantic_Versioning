@@ -6,7 +6,7 @@ on:
 #      - main
   push:
     branches:
-      - master
+      - feature/automation
 jobs:
   build:
     runs-on: ubuntu-latest
