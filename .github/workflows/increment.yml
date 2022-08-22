@@ -18,5 +18,5 @@ jobs:
         repo-token: ${{secrets.GITHUB_TOKEN}}
     - name: Release Number Output
       run: |
-        echo "App Version 1: ${{ steps.version.outputs.last }}"
-        echo "App Version 2: ${{ steps.version.outputs.next }}"
+        echo "App Version 1: ${{ steps.tages_versioning.outputs.last }}"
+        echo "App Version 2: ${{ steps.tages_versioning.outputs.next }}"
