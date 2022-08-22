@@ -32,4 +32,5 @@ jobs:
           # Named version, will be used as suffix for name version tag
           namespace: my-service
           # If this is set to true, *every* commit will be treated as a new version.
-          bump_each_commit: true
+#          bump_each_commit: true
+          search_commit_body: true
