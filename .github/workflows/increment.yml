@@ -14,9 +14,10 @@ jobs:
         REPO_OWNER: prashant-demo110
         WITH_V: true
         RELEASE_BRANCHES: master
+        DEFAULT BUMP: major
         SOURCE: .
         DRY_RUN: true
         INITIAL_VERSION: 0.0.0
         TAG_CONTEXT: repo
         PRERELEASE_SUFFIX: prerelease
-        VERBOSE: true
+        VERBOSE: false
