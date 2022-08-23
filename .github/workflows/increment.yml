@@ -20,6 +20,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: git
+        run: |
+           git fetch --all --tags
       - name: Creating release Version 
         uses: paulhatch/semantic-version@v5.0.0-alpha2
         with:
