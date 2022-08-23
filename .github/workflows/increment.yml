@@ -1,8 +1,9 @@
 name: Creation of Release Version
-on:
+on:  
+  push:
   pull_request:
     branches:
-      - master
+      - 'master'
 jobs:
   build:
     name: Create Release
