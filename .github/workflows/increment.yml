@@ -51,4 +51,4 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
              https://api.github.com/repos/$owner/$repo/releases \
-            -d '{"tag_name":"v9.9.9","target_commitish":"master","name":"v9.9.9","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+            -d '{"tag_name":${{ steps.bump_version.outputs.next-version }},"target_commitish":"master","name":${{ steps.bump_version.outputs.next-version }},"body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
