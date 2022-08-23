@@ -24,7 +24,8 @@ jobs:
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
-          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+ #         current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+          current-version: '9.9.9'
           version-fragment: ${{github.event.comment.body}}
           
       - name: Do something with your bumped release version
