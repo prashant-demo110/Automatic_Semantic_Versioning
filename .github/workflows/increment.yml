@@ -1,8 +1,9 @@
 name: Release # Workflow name displayed on GitHub 
 
-on: 
-  workflow_dispatch: # Trigger manually 
-   branches: master # Branch on which the workflow will run 
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
 
 jobs: 
    new-release: 
