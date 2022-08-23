@@ -1,12 +1,13 @@
 name: Creation of Release Version
-on:  
-  push:
+on:
   pull_request:
-    branches:
-      - 'master'
+    types:
+      - closed
+
 jobs:
-  build:
-    name: Create Release
+  if_merged:
+    name: Create Release  
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Taking Latest Release Tag number
@@ -30,7 +31,7 @@ jobs:
 #          current-version: "$Release_tag"
           version-fragment: 'major'
           
-      - name: Do something with your bumped release version
+      - name: Create release version
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
