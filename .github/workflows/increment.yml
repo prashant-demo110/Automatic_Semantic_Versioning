@@ -40,11 +40,11 @@ jobs:
           minor_pattern: "minor"
           # A string to determine the format of the version output
           if: "contains(github.event.head_commit.message, 'major')"
-          format1: "${increment}.${minor}.${patch}"
+          format1: "${major}${increment}.${minor}.${patch}"
           
           elif: "contains(github.event.head_commit.message, 'minor')"
-          format2: "${major}.${increment}.${patch}"
+          format2: "${major}.${minor}${increment}.${patch}"
           
           else: "contains(github.event.head_commit.message, 'patch')"
-          format3: "${major}.${minor}.${increment}"
+          format3: "${major}.${minor}.${patch}${increment}"
           
