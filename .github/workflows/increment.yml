@@ -4,7 +4,6 @@ on:
   push:
     branches: [ master ]
   workflow_dispatch:
-  
 jobs: 
    new-release: 
       runs-on: ubuntu-latest 
@@ -17,12 +16,15 @@ jobs:
              github-token: ${{ secrets.github_token }}
              output-file: "false" 
 
-         - name: Create Release # This action will create the actual release 
-           uses: actions/create-release@v1 
-           # if: ${{ steps.changelog.outputs.skipped == 'false' }} 
-           env: 
-            GITHUB_TOKEN: ${{ secrets.github_token }}
+         - name: Create Release
+           id: create_release
+           uses: actions/create-release@v1
+           env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
            with:
               tag_name: ${{ steps.changelog.outputs.tag }}
               release_name: ${{ steps.changelog.outputs.tag }} 
-              body: ${{ steps.changelog.outputs.clean_changelog }}
+              body: |
+                Changes in this Release
+              draft: false
+              prerelease: false
