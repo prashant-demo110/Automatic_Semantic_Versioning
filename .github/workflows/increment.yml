@@ -44,6 +44,8 @@ jobs:
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          owner="prashant-demo110"
+          repo="Automatic_Semantic_Versioning"
           curl /
             -X POST /
             -H "Accept: application/vnd.github+json" /
