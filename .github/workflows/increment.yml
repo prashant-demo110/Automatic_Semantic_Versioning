@@ -12,7 +12,7 @@ jobs:
       - name: Taking Latest Release Tag number
         id: releaseVersion
         run: |
-          owner="pulkitSamrat"
+          owner="prashant-demo110"
           repo="Automatic_Semantic_Versioning"
           release_json=$(curl https://api.github.com/repos/$owner/$repo/releases)
           Release_tag=$(echo "$release_json" | jq -r '.[0].tag_name')
