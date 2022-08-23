@@ -46,6 +46,8 @@ jobs:
           # https://cli.github.com/manual/gh_api
 
           gh api \
+            env: \
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             /repos/$owner/$repo/releases \
