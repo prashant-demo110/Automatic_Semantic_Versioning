@@ -9,6 +9,17 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
+      - name: Taking Latest Release Tag number
+        id: releaseVersion
+        run: |
+          owner="prashant-demo110"
+          repo="Automatic_Semantic_Versioning"
+          release_json=$(curl https://api.github.com/repos/$owner/$repo/releases)
+          Release_tag=$(echo "$release_json" | jq -r '.[0].tag_name')
+          
+          echo "Release_tag: Latest Tag is : $Release_tag"
+          echo ::set-output name=Release_tag::"$Release_tag"
+          
       - name: Checkout code
         uses: actions/checkout@v2
         
@@ -16,44 +27,19 @@ jobs:
         with:
           fetch-depth: '0'
       - name: Bumping and Creating tags
+        id: anotherVersion
         uses: anothrNick/github-tag-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
+          WITH_V: false 
           
-      - name: Git checkout
-        uses: actions/checkout@v2
+      - name: Bump release version
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.0.2
         with:
-          fetch-depth: '0'
-      - name: git
-        run: |
-           git fetch --all --tags
-           
-           
-      - name: "Build & test"
-        run: |
-          echo "done!"
+#          current-version: ${{ steps.anotherVersion.outputs.Another_Version }}
+          current-version: '2.2.2'
+          version-fragment: 'major'
           
-      - uses: "marvinpinto/action-automatic-releases@v1.2.1"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          
-          files: |
-            LICENSE.txt
-            *.jar     
-            
-      - name: Creating release Version 
-        uses: paulhatch/semantic-version@v5.0.0-alpha2
-        with:
-          # The prefix to use to identify tags
-          tag_prefix: "v"
-          # A string which, if present in a git commit, indicates that a change represents a
-          # major (breaking) change, supports regular expressions wrapped with '/'
-          major_pattern: "major"
-          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
-          minor_pattern: "minor"
-          # A string to determine the format of the version output
-          if: "startsWith(github.event.head_commit.message, 'major')"
-          format: "${major}${increment}.${minor}.${patch}"
+      - name: Do something with your bumped release version
+        run: echo ${{ steps.bump_version.outputs.next-version }}
