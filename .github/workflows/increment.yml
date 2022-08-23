@@ -1,6 +1,7 @@
 name: Creation of Release Version
 on:
   pull_request:
+    branches: [master]
     types:
       - closed
 
@@ -29,7 +30,7 @@ jobs:
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
 #          current-version: "$Release_tag"
-          version-fragment: 'major'
+          version-fragment: 'feature'
           
       - name: Create release version
         env: 
