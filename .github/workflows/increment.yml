@@ -53,5 +53,5 @@ jobs:
           # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
           minor_pattern: "minor"
           # A string to determine the format of the version output
-          if: "contains(github.event.head_commit.message, 'major')"
+          if: "startsWith(github.event.head_commit.message, 'major')"
           format: "${major}${increment}.${minor}.${patch}"
