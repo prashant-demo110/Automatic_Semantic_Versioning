@@ -20,13 +20,27 @@ jobs:
           echo "Release_tag: Latest Tag is : $Release_tag"
           echo ::set-output name=Release_tag::"$Release_tag"
           
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: '0'
+      - name: Bumping and Creating tags
+        id: anotherVersion
+        uses: anothrNick/github-tag-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          WITH_V: true
+          WITH_V: false 
+          
       - name: Bump release version
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
- #         current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
-          current-version: '9.9.9'
-          version-fragment: ${{github.event.comment.body}}
+#          current-version: ${{ steps.anotherVersion.outputs.Another_Version }}
+          current-version: '2.2.2'
+          version-fragment: 'feature'
           
       - name: Do something with your bumped release version
         run: echo ${{ steps.bump_version.outputs.next-version }}
