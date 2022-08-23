@@ -28,6 +28,20 @@ jobs:
       - name: git
         run: |
            git fetch --all --tags
+           
+           
+      - name: "Build & test"
+        run: |
+          echo "done!"
+          
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            LICENSE.txt
+            *.jar     
+            
       - name: Creating release Version 
         uses: paulhatch/semantic-version@v5.0.0-alpha2
         with:
@@ -40,5 +54,4 @@ jobs:
           minor_pattern: "minor"
           # A string to determine the format of the version output
           if: "contains(github.event.head_commit.message, 'major')"
-          format: "${increment}.${minor}.${patch}"
-          version_format: format
+          format: "${major}${increment}.${minor}.${patch}"
