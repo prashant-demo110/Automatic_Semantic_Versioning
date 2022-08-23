@@ -1,50 +1,45 @@
-name: Creation of Release Version
-on:  
-  push:
-  pull_request:
-    branches:
-      - 'master'
-jobs:
-  build:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - uses: actions/checkout@master
-        with:
-          fetch-depth: '0'
-      - name: Bumping and Creating tags
-        uses: anothrNick/github-tag-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          
-      - name: Git checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: '0'
-      - name: git
-        run: |
-           git fetch --all --tags
-      - name: Creating release Version 
-        uses: paulhatch/semantic-version@v5.0.0-alpha2
-        with:
-          # The prefix to use to identify tags
-          # tag_prefix: "v"
-          # A string which, if present in a git commit, indicates that a change represents a
-          # major (breaking) change, supports regular expressions wrapped with '/'
-          major_pattern: "major"
-          # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
-          minor_pattern: "minor"
-          # A string to determine the format of the version output
-          if: "contains(github.event.head_commit.message, 'major')"
-          format1: "${major}${increment}.${minor}.${patch}"
-          
-          elif: "contains(github.event.head_commit.message, 'minor')"
-          format2: "${major}.${minor}${increment}.${patch}"
-          
-          else: "contains(github.event.head_commit.message, 'patch')"
-          format3: "${major}.${minor}.${patch}${increment}"
-          
+name: Release # Workflow name displayed on GitHub 
+
+on: 
+
+  workflow_dispatch: # Trigger manually 
+
+   branches: master # Branch on which the workflow will run 
+
+jobs: 
+
+   new-release: 
+
+      runs-on: ubuntu-latest 
+
+      steps: 
+
+         - uses: actions/checkout@v3 # Checkout our working repository 
+
+         - name: Conventional Changelog Action
+
+             id: changelog 
+
+             uses: TriPSs/conventional-changelog-action@v3 
+
+             with: 
+
+                 github-token: ${{ secrets.github_token } 
+
+                 output-file: "false" 
+
+        - name: Create Release # This action will create the actual release 
+
+             uses: actions/create-release@v1 
+
+             if: ${{ steps.changelog.outputs.skipped == 'false' } 
+
+             env: 
+
+                GITHUB_TOKEN: ${{ secrets.github_token } 
+
+                with: tag_name: ${{ steps.changelog.outputs.tag } 
+
+                release_name: ${{ steps.changelog.outputs.tag } 
+
+                body: ${{ steps.changelog.outputs.clean_changelog }
