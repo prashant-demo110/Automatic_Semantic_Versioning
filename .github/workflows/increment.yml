@@ -39,13 +39,12 @@ jobs:
           # Same as above except indicating a minor change, supports regular expressions wrapped with '/'
           minor_pattern: "minor"
           # A string to determine the format of the version output
-          format: "${major}.${minor}.${patch}"
-          # Optional path to check for changes. If any changes are detected in the path the
-          # 'changed' output will true. Enter multiple paths separated by spaces.
-          # change_path: src/hello
-          # Named version, will be used as suffix for name version tag
-          # namespace: hello
-          # If this is set to true, *every* commit will be treated as a new version.
-          bump_each_commit: true
-          # If true, the body of commits will also be searched for major/minor patterns to determine the version type.
-          # search_commit_body: true
+          if: "contains(github.event.head_commit.message, 'major')"
+          format: "${increment}.${minor}.${patch}"
+          
+          elif: "contains(github.event.head_commit.message, 'minor')"
+          format: "${major}.${increment}.${patch}"
+          
+          else: "contains(github.event.head_commit.message, 'patch')"
+          format: "${major}.${minor}.${increment}"
+          
