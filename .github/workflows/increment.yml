@@ -23,23 +23,9 @@ jobs:
           
       - name: Checkout code
         uses: actions/checkout@v2
-          
-      - name: Bumping Major Index
-        if: contains(github.event.pull_request.head.message, 'major')
-        uses: christian-draeger/increment-semantic-version@1.0.2
-        with:
-          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
-          version-fragment: 'major'
-                    
-      - name: Bumping Minor Index
-        if: contains(github.event.pull_request.head.message, 'feature')      
-        uses: christian-draeger/increment-semantic-version@1.0.2
-        with:
-          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
-          version-fragment: 'feature'
 
       - name: Bumping Patch Index
-        if: contains(github.event.pull_request.head.message, 'bug')      
+        if: startsWith(github.event.pull_request.head.message,'#bug')      
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
