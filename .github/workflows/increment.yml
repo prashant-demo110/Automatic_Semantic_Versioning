@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Bumping Patch Index 
+        id: bump_version
         if: contains(github.event.pull_request.title, 'bug')
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
