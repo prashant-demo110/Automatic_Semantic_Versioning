@@ -24,12 +24,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Bumping Patch Index
-        if: startsWith(github.event.pull_request.head.message,'#bug')      
+      - name: Bumping Patch Index 
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
-          version-fragment: 'bug'
+          version-fragment: 'github.event.pull_request.head.message'
           
       - name: Create release version
         env: 
