@@ -24,14 +24,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
           
-      - name: Bump release version
-        id: bump_version
+      - name: Bumping Major Index
+        if: contains(github.event.head_commit.message, 'major')
         uses: christian-draeger/increment-semantic-version@1.0.2
-        if: startsWith(github.event.head_commit.message, 'feature')
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
-#          current-version: "$Release_tag"
-          version-fragment: '${{ github.event.head_commit.message }}'
+          version-fragment: 'major'
+                    
+      - name: Bumping Minor Index
+        if: contains(github.event.head_commit.message, 'feature')      
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+          version-fragment: 'feature'
+
+      - name: Bumping Patch Index
+        if: contains(github.event.head_commit.message, 'bug')      
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+          version-fragment: 'bug'
           
       - name: Create release version
         env: 
