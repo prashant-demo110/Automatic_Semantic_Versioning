@@ -24,8 +24,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Bumping Patch Index
-        if: startsWith(github.event.pull_request.head.message,'#bug')      
+      - name: Bumping Patch Index 
+        if: contains(github.event.head_commit.message, 'bug')
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
