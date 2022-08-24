@@ -30,7 +30,7 @@ jobs:
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
 #          current-version: "$Release_tag"
-          version-fragment: 'feature'
+          version-fragment: '${{github.event.head_comment.body}}'
           
       - name: Create release version
         env: 
