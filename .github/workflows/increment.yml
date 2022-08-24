@@ -27,10 +27,11 @@ jobs:
       - name: Bump release version
         id: bump_version
         uses: christian-draeger/increment-semantic-version@1.0.2
+        if: startsWith(github.event.head_commit.message, 'feature')
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
 #          current-version: "$Release_tag"
-          version-fragment: '${{github.event.head_comment.body}}'
+          version-fragment: '${{ github.event.head_commit.message }}'
           
       - name: Create release version
         env: 
