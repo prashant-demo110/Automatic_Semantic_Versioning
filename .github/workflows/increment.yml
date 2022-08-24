@@ -23,10 +23,29 @@ jobs:
           
       - name: Checkout code
         uses: actions/checkout@v2
-
+        
+      - name: Bumping Major Index
+        id: bump_version_major
+        if: contains(github.event.pull_request.title, 'major'); then 
+          bump_version==bump_version_major
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+          version-fragment: 'major'
+                    
+      - name: Bumping Minor Index
+        id: bump_version_minor
+        if: contains(github.event.pull_request.title, 'feature'); then 
+          bump_version==bump_version_minor      
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
+          version-fragment: 'feature'
+          
       - name: Bumping Patch Index 
-        id: bump_version
-        if: contains(github.event.pull_request.title, 'bug')
+        id: bump_version_patch
+        if: contains(github.event.pull_request.title, 'bug'); then 
+          bump_version==bump_version_patch
         uses: christian-draeger/increment-semantic-version@1.0.2
         with:
           current-version: ${{ steps.releaseVersion.outputs.Release_tag }}
