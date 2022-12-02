@@ -21,8 +21,6 @@ jobs:
           echo "Release_tag: Latest Tag is : $Release_tag"
           echo ::set-output name=Release_tag::"$Release_tag"
           
-          echo "Release_tag=$Release_tag" >> $GITHUB_OUTPUT
-          
       - name: Checkout code
         uses: actions/checkout@v2
         
